@@ -135,10 +135,13 @@ function getbyID(PeopleID) {
         contentType: "application/json;charset=UTF-8",
         dataType: "json",
         success: function (result) {
+            let datas = new Date(result.dataNascimento)
             $('#PeopleID').val(result.pessoaId);
             $('#Nome').val(result.nome);
             $('#Idade').val(result.idade);
-            $('#DataNascimento').val(result.dataNascimento);
+            // :(
+            $('#DataNascimento').val(datas.getFullYear() + '-' + datas.getMonth() + '-' + datas.getDate());
+            //$('#DataNascimento').val(datas.getFullYear() + '-' + datas.getMonth() + '-' + datas.getDate());
             $('#Telefone').val(result.telefone);
             $('#EnderecoId').val(result.endereco.enderecoId);
             $('#Cep').val(result.endereco.cep);
@@ -170,6 +173,7 @@ function Update() {
         pessoaId: $('#PeopleID').val(),
         nome: $('#Nome').val(),
         idade: $('#Idade').val(),
+        
         dataNascimento: $('#DataNascimento').val(),
         telefone: $('#Telefone').val(),
         endereco: {
@@ -238,7 +242,12 @@ function clearTextBox() {
     $('#Telefone').css('border-color', 'lightgrey');
     limpa_formulário_cep();
 }
-
+var formatData = function (d) {
+    var date = d.getDay();
+    var month = d.getMonth();
+    var year = d.getFullYear();
+    return year + "-" + (int)(month) + "-" + (int)(date);
+};
 
 function validate() {
     var isValid = true;
